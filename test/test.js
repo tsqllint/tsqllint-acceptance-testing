@@ -2,7 +2,7 @@ const chai = require('chai')
 const expect = chai.expect
 const spawn = require('child_process').spawn
 
-const testScriptPath = process.env.TEST_SCRIPT_PATH === 'undefined' ? process.env.TEST_SCRIPT_PATH : './tsqllint.js'
+const testScriptPath = process.env.TEST_SCRIPT_PATH === undefined ? './tsqllint.js' : process.env.TEST_SCRIPT_PATH
 
 describe('Command Line', () => {
   describe('Exit Code', () => {
