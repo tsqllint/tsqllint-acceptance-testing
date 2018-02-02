@@ -2,6 +2,8 @@ const chai = require('chai')
 const expect = chai.expect
 const spawn = require('child_process').spawn
 
+const testScriptPath = process.env.TEST_SCRIPT_PATH === 'undefined' ? process.env.TEST_SCRIPT_PATH : './tsqllint.js'
+
 describe('Command Line', () => {
   describe('Exit Code', () => {
     it('Should be zero when no arguments are passed', (done) => {
@@ -70,7 +72,7 @@ describe('Command Line', () => {
 })
 
 function SpawnTestProcess (args, consoleOutput, writeToConsole = false) {
-  var testProcess = spawn('./tsqllint.js', args)
+  var testProcess = spawn(testScriptPath, args)
 
   testProcess.stdout.on('data', function (data) {
     if (writeToConsole) process.stdout.write(data)
