@@ -1,5 +1,6 @@
 const chai = require('chai')
 const expect = chai.expect
+const os = require('os')
 const spawn = require('child_process').spawn
 
 const testScriptPath = process.env.TEST_SCRIPT_PATH === undefined ? './tsqllint.js' : process.env.TEST_SCRIPT_PATH
@@ -72,7 +73,14 @@ describe('Command Line', () => {
 })
 
 function SpawnTestProcess (args, consoleOutput, writeToConsole = false) {
-  var testProcess = spawn(testScriptPath, args)
+  if (os.type() === 'Darwin' || os.type() === 'Linux') {
+    var testProcess = spawn(testScriptPath, args)
+  } else if (os.type() === 'Windows_NT') {
+    args.splice(0, 0, testScriptPath);
+    var testProcess = spawn('node', args)
+  } else {
+    throw new Error(`Invalid Platform: ${os.type()}, ${process.arch}`)
+  }
 
   testProcess.stdout.on('data', function (data) {
     if (writeToConsole) process.stdout.write(data)
