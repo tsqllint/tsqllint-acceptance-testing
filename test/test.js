@@ -4,6 +4,7 @@ const os = require('os')
 const spawn = require('child_process').spawn
 
 const testScriptPath = process.env.TEST_SCRIPT_PATH === undefined ? './tsqllint.js' : process.env.TEST_SCRIPT_PATH
+console.log(`Setting test script path to ${testScriptPath}`)
 
 describe('Command Line', () => {
   describe('Exit Code', () => {
@@ -63,7 +64,7 @@ describe('Command Line', () => {
 
     it('Should be one when passed a directory that doesnt pass linting rules', (done) => {
       var consoleOutput
-      SpawnTestProcess(['./test/sql'], consoleOutput).on('exit', function (code) {
+      SpawnTestProcess(['./test/sql'], consoleOutput, true).on('exit', function (code) {
         expect(code).to.equal(1)
         expect(consoleOutput).to.not.be.null
         done()
@@ -72,7 +73,7 @@ describe('Command Line', () => {
   })
 })
 
-function SpawnTestProcess (args, consoleOutput, writeToConsole = false) {
+function SpawnTestProcess (args, consoleOutput, writeToConsole) {
   if (os.type() === 'Darwin' || os.type() === 'Linux') {
     var testProcess = spawn(testScriptPath, args)
   } else if (os.type() === 'Windows_NT') {
