@@ -8,6 +8,15 @@ console.log(`Setting test script path to ${testScriptPath}`)
 
 describe('Command Line', () => {
   describe('Exit Code', () => {
+    it('Should be zero when passed -v argument', (done) => {
+      var consoleOutput
+      SpawnTestProcess(['-v'], consoleOutput, true).on('exit', function (code) {
+          expect(code).to.equal(0)
+          expect(consoleOutput).to.not.be.null
+          done()
+      })
+    })
+
     it('Should be zero when no arguments are passed', (done) => {
       var consoleOutput
       SpawnTestProcess([], consoleOutput).on('exit', function (code) {
@@ -64,7 +73,7 @@ describe('Command Line', () => {
 
     it('Should be one when passed a directory that doesnt pass linting rules', (done) => {
       var consoleOutput
-      SpawnTestProcess(['./test/sql'], consoleOutput, true).on('exit', function (code) {
+      SpawnTestProcess(['./test/sql'], consoleOutput).on('exit', function (code) {
         expect(code).to.equal(1)
         expect(consoleOutput).to.not.be.null
         done()
