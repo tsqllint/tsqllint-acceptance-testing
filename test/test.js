@@ -35,10 +35,10 @@ describe('Command Line', () => {
       })
     })
 
-    it('Should be zero when passed invalid file path argument', (done) => {
+    it('Should be one when passed invalid file path argument', (done) => {
       var consoleOutput
       SpawnTestProcess(['./doesntexist/foo.sql'], consoleOutput).on('exit', function (code) {
-        expect(code).to.equal(0)
+        expect(code).to.equal(1)
         expect(consoleOutput).to.not.be.null
         done()
       })
