@@ -17,10 +17,10 @@ describe('Command Line', () => {
       })
     })
 
-    it('Should be zero when no arguments are passed', (done) => {
+    it('Should be one when no arguments are passed', (done) => {
       var consoleOutput
       SpawnTestProcess([], consoleOutput).on('exit', function (code) {
-        expect(code).to.equal(0)
+        expect(code).to.equal(1)
         expect(consoleOutput).to.not.be.null
         done()
       })
